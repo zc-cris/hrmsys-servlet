@@ -5,9 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import cn.zc.hrmsys.dao.base.dao.BaseDao;
-import cn.zc.hrmsys.pojo.entity.File;
+import cn.zc.hrmsys.pojo.entity.FileBean;
 
-public class FileDao extends BaseDao<File> implements IFileDao{
+public class FileDao extends BaseDao<FileBean> implements IFileDao{
 
 	/**
 	 * 
@@ -18,8 +18,8 @@ public class FileDao extends BaseDao<File> implements IFileDao{
 	 * @Create Date：2018年1月31日下午8:13:58
 	 */
 	@Override
-	public List<File> getAll() throws SQLException {
-		String sql = "select fileId,fileName,fileDesc,uploadTime,userName,fileState from tb_file";
+	public List<FileBean> getAll() throws SQLException {
+		String sql = "select fileId,fileName,fileDesc,uploadTime,userName from tb_file";
 		return queryList(sql);
 	}
 
@@ -32,8 +32,8 @@ public class FileDao extends BaseDao<File> implements IFileDao{
 	 * @Create Date：2018年1月31日下午8:16:25
 	 */
 	@Override
-	public List<File> getAllWithFileName(String name) throws SQLException {
-		String sql = "select fileId,fileName,fileDesc,uploadTime,userName,fileState from tb_file where fileName like ?";
+	public List<FileBean> getAllWithFileName(String name) throws SQLException {
+		String sql = "select fileId,fileName,fileDesc,uploadTime,userName from tb_file where fileName like ?";
 		return queryList(sql, "%"+name+"%");
 	}
 
@@ -41,12 +41,12 @@ public class FileDao extends BaseDao<File> implements IFileDao{
 	 * 
 	 * @MethodName: updateFile
 	 * @Description: TODO (修改上传文件记录)
-	 * @see cn.zc.hrmsys.dao.file.dao.IFileDao#updateFile(cn.zc.hrmsys.pojo.entity.File)
+	 * @see cn.zc.hrmsys.dao.file.dao.IFileDao#updateFile(cn.zc.hrmsys.pojo.entity.FileBean)
 	 * @Author：zc-cris
 	 * @Create Date：2018年1月31日下午8:11:49
 	 */
 	@Override
-	public void updateFile(File file) throws SQLException {
+	public void updateFile(FileBean file) throws SQLException {
 		String sql = "update tb_file set fileName=?,fileDesc=?,lastModifyUser=?,lastModifyTime=? where fileId=?";
 		update(sql,file.getFileName(), file.getFileDesc(), file.getLastModifyUser(),new Date(),file.getFileId());
 	}
@@ -55,12 +55,12 @@ public class FileDao extends BaseDao<File> implements IFileDao{
 	 * 
 	 * @MethodName: addFile
 	 * @Description: TODO (新增一条文件记录)
-	 * @see cn.zc.hrmsys.dao.file.dao.IFileDao#addFile(cn.zc.hrmsys.pojo.entity.File)
+	 * @see cn.zc.hrmsys.dao.file.dao.IFileDao#addFile(cn.zc.hrmsys.pojo.entity.FileBean)
 	 * @Author：zc-cris
 	 * @Create Date：2018年1月31日下午7:54:12
 	 */
 	@Override		
-	public void addFile(File file) throws SQLException {
+	public void addFile(FileBean file) throws SQLException {
 		String sql = "insert into tb_file (fileName, fileDesc,filePath,userName,uploadTime) values (?,?,?,?,?)";
 		update(sql, file.getFileName(), file.getFileDesc(), file.getFilePath(),file.getUserName(),
 				new Date());
@@ -76,7 +76,7 @@ public class FileDao extends BaseDao<File> implements IFileDao{
 	 */
 	@Override
 	public void deleteFileById(Integer id) throws SQLException {
-		String sql = "update tb_file set fileState = 0 where fileId = ?";
+		String sql = "delete from tb_file  where fileId = ?";
 		update(sql, id);
 	}
 
@@ -89,7 +89,7 @@ public class FileDao extends BaseDao<File> implements IFileDao{
 	 * @Create Date：2018年1月31日下午8:04:43
 	 */
 	@Override
-	public File getFileById(Integer id) throws SQLException {
+	public FileBean getFileById(Integer id) throws SQLException {
 		String sql = "select fileId,fileName,userName,fileDesc,uploadTime,lastModifyTime,lastModifyUser,fileState from tb_file where fileId = ?";
 		return queryOne(sql, id);
 	}

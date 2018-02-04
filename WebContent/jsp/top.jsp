@@ -24,8 +24,8 @@
     	
     	$("#exit").click(function(){
     		/** parent从主界面进行退出,避免局部刷新*/
-    		parent.location = "${pageContext.request.contextPath}/logout.action";
-    	})
+    		parent.location = "${pageContext.request.contextPath}/logout.user";
+    	}) 
 	})
 	
     

@@ -55,13 +55,13 @@
 			/** 获取到用户选中的复选框  */
 			var checkedBoxs = boxs.filter(":checked");
 			if (checkedBoxs.length < 1) {
-				$.ligerDialog.error("请选择一个需要删除的用户！");
+				$.ligerDialog.error("请选择需要删除的用户！");
 			} else {
 				/** 得到用户选中的所有的需要注销的ids */
 				var ids = checkedBoxs.map(function() {
 					return this.value;
 				})
-				//创建一个数组，将每个id传递进去，放进隐藏域中
+				///////创建一个数组，将每个id传递进去，放进隐藏域中
 				var checkedIdArray = new Array();
 				for (var a = 0; a < checkedBoxs.length; a++) {
 					checkedIdArray.push(checkedBoxs[a].value);
@@ -89,6 +89,7 @@
 
 		//全选，全不选
 		$("#checkAll").click(function() {
+			alert($(":checkbox").attr("checked"));
 			if ($(":checkbox").attr("checked") != "checked") {
 				$(":checkbox").attr("checked", "checked");
 			} else {
@@ -139,7 +140,7 @@
 									<tr>
 										<td class="font3">用户名：<input type="text" name="userName"
 											value="${uName }"> 用户状态：<select name="userState"
-											style="width: 60px" value="${selectStatus }">
+											style="width: 60px">
 												<option value="1"
 													<c:if test="${selectStatus eq '1'}">selected</c:if>>有效</option>
 												<option value="2"

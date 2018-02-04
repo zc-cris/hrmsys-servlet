@@ -113,4 +113,6 @@ public interface IDeptDao{
 	 * @throws
 	 */
 	long getCountWithName(String name) throws SQLException;
+
+	void deleteUsersByIds(String[] values) throws SQLException;
 }

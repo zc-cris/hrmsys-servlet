@@ -34,6 +34,12 @@ public class User {
 		this.userName = userName;
 		this.userPwd = userPwd;
 	}
+	public User(String userName, String userPwd, Integer userId, boolean userState) {
+		this.userName = userName;
+		this.userPwd = userPwd;
+		this.userId = userId;
+		this.userState = userState;
+	}
 	public Integer getUserId() {
 		return userId;
 	}

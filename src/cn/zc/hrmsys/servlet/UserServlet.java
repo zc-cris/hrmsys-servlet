@@ -44,10 +44,23 @@ public class UserServlet extends HttpServlet {
 			method.invoke(this, request, response);
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException e) {
+			e.printStackTrace();
 			response.sendRedirect("error.jsp");
 		}
 	}
 
+	/**
+	 * 
+	 * @MethodName: login
+	 * @Description: TODO (登录)
+	 * @param request
+	 * @param response
+	 * @Return Type: void
+	 * @Author: zc-cris
+	 * @Create Date：2018年2月3日上午11:22:09
+	 * @since
+	 * @throws
+	 */
 	@SuppressWarnings("unused")
 	private void login(HttpServletRequest request, HttpServletResponse response) {
 		User user;
@@ -58,14 +71,32 @@ public class UserServlet extends HttpServlet {
 				request.getSession().setAttribute("user", user);
 				getJsp("/jsp/main.jsp", request, response);
 			} else {
-				response.sendRedirect(request.getContextPath() + "/loginForm.jsp");
+				request.setAttribute("message", "no");
+				getJsp("/loginForm.jsp", request, response);
 			}
 		} catch (InstantiationException | IllegalAccessException | InvocationTargetException | SQLException
 				| ServletException | IOException e) {
 			e.printStackTrace();
 		}
 	}
-
+	@SuppressWarnings("unused")
+	private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		request.getSession().removeAttribute("user");
+		response.sendRedirect(request.getContextPath()+"/loginForm.jsp");
+	}
+	
+	/**
+	 * 
+	 * @MethodName: query
+	 * @Description: TODO (模糊查询)
+	 * @param request
+	 * @param response
+	 * @Return Type: void
+	 * @Author: zc-cris
+	 * @Create Date：2018年2月3日上午11:21:56
+	 * @since
+	 * @throws
+	 */
 	@SuppressWarnings("unused")
 	private void query(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -96,7 +127,7 @@ public class UserServlet extends HttpServlet {
 
 	/**
 	 * 
-	 * @MethodName: delete @Description: TODO (根据id删除用户) @param request @param
+	 * @MethodName: delete @Description: TODO (根据一个或者多个id删除用户) @param request @param
 	 *              response @Return Type: void @Author: zc-cris @Create
 	 *              Date：2018年2月2日上午8:49:13 @since @throws
 	 */
@@ -119,6 +150,18 @@ public class UserServlet extends HttpServlet {
 
 	}
 
+	/**
+	 * 
+	 * @MethodName: queryAll
+	 * @Description: TODO (查询所有有效用户)
+	 * @param request
+	 * @param response
+	 * @Return Type: void
+	 * @Author: zc-cris
+	 * @Create Date：2018年2月3日上午11:23:38
+	 * @since
+	 * @throws
+	 */
 	@SuppressWarnings("unused")
 	private void queryAll(HttpServletRequest request, HttpServletResponse response) {
 		List<User> users;
@@ -131,20 +174,31 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 * 
+	 * @MethodName: add
+	 * @Description: TODO (带验证的添加用户)
+	 * @param request
+	 * @param response
+	 * @Return Type: void
+	 * @Author: zc-cris
+	 * @Create Date：2018年2月3日上午11:24:00
+	 * @since
+	 * @throws
+	 */
 	@SuppressWarnings("unused")
 	private void add(HttpServletRequest request, HttpServletResponse response) {
 		String userName = request.getParameter("userName");
 		String userPwd = request.getParameter("userPwd");
 		User user = new User(userName, userPwd);
-		user.setUserId(Integer.valueOf(request.getParameter("userId")));
 		request.setAttribute("flag", "1");			//页面显示提示信息
 		try {
-			if (userName == null || userName.equals("")) {
+			if (userName == null || userName.trim().equals("")) {
 				request.setAttribute("message", "员工姓名不能为空");
 				getJsp("/jsp/user/showAddUser.jsp", request, response);
 				return;
 			}
-			if(userPwd == null || userPwd.equals("")) {
+			if(userPwd == null || userPwd.trim().equals("")) {
 				request.setAttribute("message", "员工密码不能为空");
 				getJsp("/jsp/user/showAddUser.jsp", request, response);
 				return;
@@ -163,7 +217,7 @@ public class UserServlet extends HttpServlet {
 	/**
 	 * 
 	 * @MethodName: get
-	 * @Description: TODO (现根据id查询到用户数据，再进行更新数据操作)
+	 * @Description: TODO (先根据id查询到用户数据，再进行更新数据操作)
 	 * @param request
 	 * @param response
 	 * @Return Type: void
@@ -176,7 +230,7 @@ public class UserServlet extends HttpServlet {
 	private void get(HttpServletRequest request, HttpServletResponse response) {
 		String userId = request.getParameter("userId");
 		try {
-			if(userId == null || "".equals(userId)) {
+			if(userId == null || "".equals(userId.trim())) {
 				getJsp("/jsp/user/user.jsp", request, response);
 				return;
 			}
@@ -196,14 +250,29 @@ public class UserServlet extends HttpServlet {
 		} 
 	}
 	
+	/**
+	 * 
+	 * @MethodName: update
+	 * @Description: TODO (更新用户数据)
+	 * @param request
+	 * @param response
+	 * @Return Type: void
+	 * @Author: zc-cris
+	 * @Create Date：2018年2月3日上午11:24:34
+	 * @since
+	 * @throws
+	 */
 	@SuppressWarnings("unused")
 	private void update(HttpServletRequest request, HttpServletResponse response) {
+		String userId = request.getParameter("userId");
 		String userName = request.getParameter("userName");
 		String oldName = request.getParameter("oldName");
 		String userPwd = request.getParameter("userPwd");
-		String userId = request.getParameter("userId");
-		User oldUser = new User(oldName, userPwd,Integer.valueOf(userId));
-		User newUser = new User(userName, userPwd,Integer.valueOf(userId));
+		String oldPwd = request.getParameter("oldPwd");
+		String userState = request.getParameter("userState");
+		String oldState = request.getParameter("oldState");
+		User oldUser = new User(oldName, oldPwd,Integer.valueOf(userId),oldState.equals("true"));
+		User newUser = new User(userName, userPwd,Integer.valueOf(userId),Integer.parseInt(userState) == 1 );
 		request.setAttribute("flag", "1");			//页面显示提示信息
 		try {
 			//添加的时候不允许用户名和密码为空，成功取出来的话，自然都是有值的，跳转到showUpdate.jsp也肯定有值
@@ -226,6 +295,7 @@ public class UserServlet extends HttpServlet {
 			getJsp("/jsp/user/showUpdateUser.jsp", request, response);
 			//后台一定要抛出UserException自定义异常，这边才能抓取
 		} catch (ServletException | IOException | SQLException | UserException e) {
+			//页面回显原始数据
 			request.setAttribute("user", oldUser);
 			checkException("/jsp/user/showUpdateUser.jsp",request, response, e);
 			e.printStackTrace();

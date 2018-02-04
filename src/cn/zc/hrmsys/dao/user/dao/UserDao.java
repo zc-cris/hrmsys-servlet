@@ -64,8 +64,8 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 	 */
 	@Override
 	public void updateUser(User user) throws SQLException {
-		String sql = "update tb_user set userName=?,userPwd=? where userId=?";
-		update(sql, user.getUserName(), user.getUserPwd(), user.getUserId());
+		String sql = "update tb_user set userName=?,userPwd=?,userState=? where userId=?";
+		update(sql, user.getUserName(), user.getUserPwd(), user.getUserState(),user.getUserId());
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 	 */
 	@Override
 	public User getById(Integer id) throws SQLException {
-		String sql = "select userId,userName,userPwd from tb_user where userId = ?";
+		String sql = "select userId,userName,userPwd,userState from tb_user where userId = ?";
 		return queryOne(sql, id);
 	}
 

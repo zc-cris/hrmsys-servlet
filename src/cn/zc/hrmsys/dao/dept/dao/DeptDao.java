@@ -6,6 +6,7 @@ import java.util.List;
 import cn.zc.hrmsys.dao.base.dao.BaseDao;
 import cn.zc.hrmsys.pojo.criteria.DeptCriteria;
 import cn.zc.hrmsys.pojo.entity.Dept;
+import cn.zc.hrmsys.util.JdbcUtils;
 
 /**
  * 	
@@ -31,7 +32,7 @@ public class DeptDao extends BaseDao<Dept> implements IDeptDao {
 	 */
 	@Override
 	public List<Dept> getAll() throws SQLException {
-		String sql = "select deptId,deptName,deptDesc,deptState from tb_dept";
+		String sql = "select deptId,deptName,deptDesc,deptState from tb_dept where deptState = 1";
 		return queryList(sql);
 	}
 
@@ -74,8 +75,8 @@ public class DeptDao extends BaseDao<Dept> implements IDeptDao {
 	 */
 	@Override
 	public void updateDept(Dept dept) throws SQLException {
-		String sql = "update tb_dept set deptName=?,deptDesc=? where deptId=?";
-		update(sql, dept.getDeptName(),dept.getDeptDesc(),dept.getDeptId());
+		String sql = "update tb_dept set deptName=?,deptDesc=?,deptState=? where deptId=?";
+		update(sql, dept.getDeptName(),dept.getDeptDesc(),dept.getDeptState(),dept.getDeptId());
 	}
 
 	/**
@@ -118,5 +119,16 @@ public class DeptDao extends BaseDao<Dept> implements IDeptDao {
 	public long getCountWithName(String name) throws SQLException {
 		String sql = "select count(deptName) from tb_dept where deptName=? and deptState = 1";
 		return queryValue(sql, name);
+	}
+
+	@Override
+	public void deleteUsersByIds(String[] values) throws SQLException {
+		String sql = "update tb_dept set deptState = 0 where deptId = ?";
+		
+		Object[][] params = new Object[values.length][];	//高维也就是行数确定执行sql语句的次数，低维也就是列数是给？赋值
+		for(int i =0;i<params.length;i++) {
+			params[i] = new Object[]{values[i]};		//给低维也就是列数“？”赋值，有几个？低维就有几个元素，决定每条SQL语句的参数个数
+		}
+		JdbcUtils.getQueryRunner().batch(sql, params);
 	}
 }

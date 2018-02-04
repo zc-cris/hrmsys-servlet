@@ -2,6 +2,8 @@ package cn.zc.hrmsys.pojo.entity;
 
 import java.util.Date;
 
+import org.apache.commons.fileupload.FileItem;
+
 /**
  * 
  * @ClassName：File.java
@@ -14,7 +16,7 @@ import java.util.Date;
  * @Copyright: zc-cris
  * @mail: 17623887386@163.com
  */
-public class File {
+public class FileBean {
 
 	private Integer fileId;
 	private String fileName;
@@ -25,10 +27,11 @@ public class File {
 	private String  lastModifyUser;
 	private Date lastModifyTime;
 	private Boolean fileState;
-	public File() {
+	private FileItem fileItem;
+	public FileBean() {
 		super();
 	}
-	public File(Integer fileId, String fileName, String fileDesc, String lastModifyUser) {
+	public FileBean(Integer fileId, String fileName, String fileDesc, String lastModifyUser) {
 		super();
 		this.fileId = fileId;
 		this.fileName = fileName;
@@ -36,8 +39,15 @@ public class File {
 		this.lastModifyUser = lastModifyUser;
 	}
 
-
-	public File(String fileName, String filePath, String fileDesc, String userName) {
+	
+	public FileBean(String fileName, String filePath, String fileDesc, FileItem fileItem) {
+		super();
+		this.fileName = fileName;
+		this.filePath = filePath;
+		this.fileDesc = fileDesc;
+		this.fileItem = fileItem;
+	}
+	public FileBean(String fileName, String filePath, String fileDesc, String userName) {
 		super();
 		this.fileName = fileName;
 		this.filePath = filePath;
@@ -45,6 +55,9 @@ public class File {
 		this.userName = userName;
 	}
 
+	public FileBean(String tempFilepath) {
+		this.filePath = tempFilepath;
+	}
 	public Integer getFileId() {
 		return fileId;
 	}
@@ -99,10 +112,18 @@ public class File {
 	public void setLastModifyTime(Date lastModifyTime) {
 		this.lastModifyTime = lastModifyTime;
 	}
+	
+	public FileItem getFileItem() {
+		return fileItem;
+	}
+	public void setFileItem(FileItem fileItem) {
+		this.fileItem = fileItem;
+	}
 	@Override
 	public String toString() {
-		return "File [fileId=" + fileId + ", fileName=" + fileName + ", uploadTime=" + uploadTime + ", filePath="
-				+ filePath + ", fileDesc=" + fileDesc + ", userName=" + userName + ", lastModifyUser=" + (lastModifyUser==null?"无":lastModifyUser)
-				+ ", lastModifyTime=" + (lastModifyTime==null?"无":lastModifyTime) + ", fileState=" + (fileState==true?"有效文件":"无效文件") + "]";
+		return "FileBean [fileId=" + fileId + ", fileName=" + fileName + ", uploadTime=" + uploadTime + ", filePath="
+				+ filePath + ", fileDesc=" + fileDesc + ", userName=" + userName + ", lastModifyUser=" + lastModifyUser
+				+ ", lastModifyTime=" + lastModifyTime + ", fileState=" + fileState + ", fileItem=" + fileItem + "]";
 	}
+	
 }

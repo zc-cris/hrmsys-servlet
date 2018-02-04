@@ -26,6 +26,12 @@ public class Dept {
 		this.deptName = deptName;
 		this.deptDesc = deptDesc;
 	}
+	public Dept(String deptName, String deptDesc, Integer deptId, boolean deptState) {
+		this.deptName = deptName;
+		this.deptId = deptId;
+		this.deptState = deptState;
+		this.deptDesc = deptDesc;
+	}
 	public Integer getDeptId() {
 		return deptId;
 	}

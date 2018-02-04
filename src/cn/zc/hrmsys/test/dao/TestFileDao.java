@@ -9,32 +9,32 @@ import org.junit.jupiter.api.Test;
 
 import cn.zc.hrmsys.dao.file.dao.FileDao;
 import cn.zc.hrmsys.dao.file.dao.IFileDao;
-import cn.zc.hrmsys.pojo.entity.File;
+import cn.zc.hrmsys.pojo.entity.FileBean;
 
 class TestFileDao {
 
 	IFileDao fileDao = new FileDao();
 	@Test			//ok
 	void testGetAll() throws SQLException {
-		List<File> list = fileDao.getAll();
+		List<FileBean> list = fileDao.getAll();
 		System.out.println(list);
 	}
 
 	@Test			//ok
 	void testGetAllWithFileName() throws SQLException {
-		List<File> list = fileDao.getAllWithFileName("指");
+		List<FileBean> list = fileDao.getAllWithFileName("指");
 		System.out.println(list);
 	}
 
 	@Test		//ok
 	void testUpdateFile() throws SQLException {
-		fileDao.updateFile(new File(3, "一阳指", "欲练此功,先自插100次", "张无忌"));
+		fileDao.updateFile(new FileBean(3, "一阳指", "欲练此功,先自插100次", "张无忌"));
 	}
 
 	@Test		//ok
 	void testAddFile() throws SQLException {
 //		fileDao.addFile(new File("九银真经", "d:\\files", "欲练此经，必先自宫", "老gay"));
-		fileDao.addFile(new File("九阳圣功", "d:\\files\\miji", "欲练此功，必选采银999次", "小gay"));
+		fileDao.addFile(new FileBean("九阳圣功", "d:\\files\\miji", "欲练此功，必选采银999次", "小gay"));
 	}
 
 	@Test		//ok
@@ -44,7 +44,7 @@ class TestFileDao {
 
 	@Test		//ok
 	void testGetFileById() throws SQLException {
-		File file = fileDao.getFileById(3);
+		FileBean file = fileDao.getFileById(3);
 		System.out.println(file);
 	}
 

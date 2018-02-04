@@ -5,6 +5,7 @@ import java.util.List;
 
 import cn.zc.hrmsys.pojo.criteria.DeptCriteria;
 import cn.zc.hrmsys.pojo.entity.Dept;
+import cn.zc.hrmsys.pojo.entity.User;
 
 public interface IDeptService {
 
@@ -17,5 +18,11 @@ public interface IDeptService {
 	void deleteById(Integer id) throws SQLException;
 
 	List<Dept> getAllWithCriteria(DeptCriteria deptCriteria) throws SQLException;
+
+	void deleteByIds(String[] values) throws NumberFormatException, SQLException;
+
+	Dept getDeptById(Integer valueOf) throws SQLException;
+
+	void update(Dept newDept, Dept oldDept) throws SQLException;
 	
 }

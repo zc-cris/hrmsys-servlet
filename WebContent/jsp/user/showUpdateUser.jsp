@@ -70,6 +70,8 @@
     	 	<!-- 隐藏表单，flag表示添加标记 -->
 			<input type="hidden" name="userId" value="${user.userId }">
 			<input type="hidden" name="oldName" value="${user.userName }">
+			<input type="hidden" name="oldState" value="${user.userState }">
+			<input type="hidden" name="oldPwd" value="${user.userPwd }">
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr><td class="font3 fftd">
 		    	<table>
@@ -79,7 +81,15 @@
 		    		<tr>
 		    			<td class="font3 fftd">密码：<input name="userPwd" id="password" size="20" value="${user.userPwd }"/></td>
 		    		</tr>
-		    		
+		    		<tr>
+		    		<td class="font3 fftd">用户状态：<select name="userState" style="width: 80px">
+												<option value="1"
+													<c:if test="${user.userState == true}">selected</c:if>>有效用户</option>
+												<option value="2"
+													<c:if test="${user.userState == false}">selected</c:if>>无效用户</option>
+							</select>
+					</td>
+		    		</tr>
 		    	</table>
 		    </td></tr>
 			<tr><td class="main_tdbor"></td></tr>
