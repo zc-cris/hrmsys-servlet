@@ -94,4 +94,10 @@ public class FileDao extends BaseDao<FileBean> implements IFileDao{
 		return queryOne(sql, id);
 	}
 
+	@Override
+	public FileBean getFilePathById(Integer fileId) throws SQLException {
+		String sql = "select filePath from tb_file where fileId = ?";
+		return queryOne(sql, fileId);
+	}
+
 }

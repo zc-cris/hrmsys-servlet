@@ -12,16 +12,16 @@
 	<meta http-equiv="expires" content="0" />    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3" />
 	<meta http-equiv="description" content="This is my page" />
-	<link href="${ctx}/css/css.css" type="text/css" rel="stylesheet" />
-	<link rel="stylesheet" type="text/css" href="${ctx}/js/ligerUI/skins/Aqua/css/ligerui-dialog.css"/>
-	<link href="${ctx}/js/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="${ctx }/js/jquery-1.11.0.js"></script>
-    <script type="text/javascript" src="${ctx }/js/jquery-migrate-1.2.1.js"></script>
-	<script src="${ctx}/js/ligerUI/js/core/base.js" type="text/javascript"></script>
-	<script src="${ctx}/js/ligerUI/js/plugins/ligerDrag.js" type="text/javascript"></script> 
-	<script src="${ctx}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
-	<script src="${ctx}/js/ligerUI/js/plugins/ligerResizable.jss" type="text/javascript"></script>
-	<link href="${ctx}/css/pager.css" type="text/css" rel="stylesheet" />
+	<link href="${pageContext.request.contextPath}/css/css.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/js/ligerUI/skins/Aqua/css/ligerui-dialog.css"/>
+	<link href="${pageContext.request.contextPath}/js/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-migrate-1.2.1.js"></script>
+	<script src="${pageContext.request.contextPath}/js/ligerUI/js/core/base.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/js/ligerUI/js/plugins/ligerDrag.js" type="text/javascript"></script> 
+	<script src="${pageContext.request.contextPath}/js/ligerUI/js/plugins/ligerDialog.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/js/ligerUI/js/plugins/ligerResizable.jss" type="text/javascript"></script>
+	<link href="${pageContext.request.contextPath}/css/pager.css" type="text/css" rel="stylesheet" />
 
 	<script type="text/javascript">
 	       $(function(){
@@ -59,7 +59,7 @@
 	    				   if(r){
 	    					   // alert("删除："+ids.get());
 	    					   // 发送请求
-	    					   window.location = "${ctx }/employee/removeEmployee?ids=" + ids.get();
+	    					   window.location = "${pageContext.request.contextPath}/employee/removeEmployee?ids=" + ids.get();
 	    				   }
 	    			   });
 	    		   }
@@ -72,9 +72,9 @@
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 	  <tr><td height="10"></td></tr>
 	  <tr>
-	    <td width="15" height="32"><img src="${ctx}/images/main_locleft.gif" width="15" height="32"></td>
-		<td class="main_locbg font2"><img src="${ctx}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：员工管理 &gt; 员工查询</td>
-		<td width="15" height="32"><img src="${ctx}/images/main_locright.gif" width="15" height="32"></td>
+	    <td width="15" height="32"><img src="${pageContext.request.contextPath}/images/main_locleft.gif" width="15" height="32"></td>
+		<td class="main_locbg font2"><img src="${pageContext.request.contextPath}/images/pointer.gif">&nbsp;&nbsp;&nbsp;当前位置：员工管理 &gt; 员工查询</td>
+		<td width="15" height="32"><img src="${pageContext.request.contextPath}/images/main_locright.gif" width="15" height="32"></td>
 	  </tr>
 	</table>
 	
@@ -85,7 +85,7 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="empform" method="post" id="empform" action="${ctx}/employee/selectEmployee">
+			  	<form name="empform" method="post" id="empform" action="${pageContext.request.contextPath}/employee/selectEmployee">
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
@@ -93,11 +93,11 @@
 							    <select name="job_id" style="width:143px;">
 					    			<option value="0">--请选择职位--</option>
 					    			<c:forEach items="${requestScope.jobs }" var="job">
-					    				<option value="${job.id }">${job.name }</option>
+					    				<option value="${job.jobId }">${job.jobName }</option>
 					    			</c:forEach>
 					    		</select>
-					    	姓名：<input type="text" name="name">
-					    	身份证号码：<input type="text" name="cardId" maxlength="18">
+					    	姓名：<input type="text" name="empName">
+					    	身份证号码：<input type="text" name="empIdCard" maxlength="18">
 					    </td>
 					  </tr>
 					  <tr>
@@ -108,7 +108,6 @@
 					    			<option value="1">男</option>
 					    			<option value="2">女</option>
 					    		</select>
-					    	手机：<input type="text" name="phone">
 					    	所属部门：<select  name="dept_id" style="width:100px;">
 								   <option value="0">--部门选择--</option>
 								   <c:forEach items="${requestScope.depts }" var="dept">
@@ -166,8 +165,8 @@
 					  	<f:formatDate value="${employee.createDate}" 
 								type="date" dateStyle="long"/>
 					  </td>
-					  <td align="center" width="40px;"><a href="${ctx}/employee/updateEmployee?flag=1&id=${employee.id}">
-							<img title="修改" src="${ctx}/images/update.gif"/></a>
+					  <td align="center" width="40px;"><a href="${pageContext.request.contextPath}/employee/updateEmployee?flag=1&id=${employee.id}">
+							<img title="修改" src="${pageContext.request.contextPath}/images/update.gif"/></a>
 					  </td>
 				</tr>
 			</c:forEach>
@@ -181,7 +180,7 @@
 	  	        pageSize="${requestScope.pageModel.pageSize}" 
 	  	        recordCount="${requestScope.pageModel.recordCount}" 
 	  	        style="digg"
-	  	        submitUrl="${ctx}/employee/selectEmployee?pageIndex={0}"/>
+	  	        submitUrl="${pageContext.request.contextPath}/employee/selectEmployee?pageIndex={0}"/>
 	  </td></tr>
 	</table>
 	<div style="height:10px;"></div>

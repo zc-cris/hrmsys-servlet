@@ -70,7 +70,7 @@
 		  <tr><td id="navbg3" class="left_nav_closed" ><div class="font1">员工管理</div></td></tr>
 		  <tr valign="top" id="submenu3" style="display: none">
 		    <td class="left_nav_bgshw" height="50">
-			  <p class="left_nav_link"><img src="${pageContext.request.contextPath}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/employee/selectEmployee" target="main">员工查询</a></img></p>
+			  <p class="left_nav_link"><img src="${pageContext.request.contextPath}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/jsp/employee/employee.jsp" target="main">员工查询</a></img></p>
 			  <p class="left_nav_link"><img src="${pageContext.request.contextPath}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/employee/addEmployee" target="main">添加员工</a></img></p>
 			</td>
 		  </tr>
@@ -86,7 +86,7 @@
 		  <tr><td height="2"></td></tr>
 		  
 		  <tr><td id="navbg5" class="left_nav_closed" onClick="showsubmenu(5)"><div class="font1">下载中心</div></td></tr>
-		  <tr valign="top" id="submenu5" style="display: none">
+		  <tr valign="top" id="submenu5" style="display: none">0
 		    <td class="left_nav_bgshw tdbtmline" height="50">
 		    	<p class="left_nav_link"><img src="${pageContext.request.contextPath}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/jsp/file/file.jsp" target="main">文档查询</a></img></p>
 			  	<p class="left_nav_link"><img src="${pageContext.request.contextPath}/images/left_nav_arrow.gif">&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/jsp/file/showAddFile.jsp" target="main">上传文档</a></img></p>

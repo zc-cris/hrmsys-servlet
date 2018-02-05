@@ -81,4 +81,14 @@ public class FileService implements IFileService {
 		return fileDao.getAllWithFileName(fileName);
 	}
 
+	@Override
+	public FileBean getFilePathById(Integer fileId) throws SQLException {
+		return fileDao.getFilePathById(fileId);
+	}
+
+	@Override
+	public FileBean getFileById(Integer valueOf) throws SQLException {
+		return fileDao.getFileById(valueOf);
+	}
+
 }

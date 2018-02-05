@@ -21,4 +21,6 @@ public interface IFileDao {
 	
 	FileBean getFileById(Integer id) throws SQLException;
 
+	FileBean getFilePathById(Integer fileId) throws SQLException;
+
 }
