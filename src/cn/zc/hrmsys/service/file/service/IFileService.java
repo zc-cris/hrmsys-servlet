@@ -18,5 +18,9 @@ public interface IFileService {
 	void downLoad(Integer id) throws SQLException;
 
 	List<FileBean> getAllWithName(String fileName) throws SQLException;
+
+	FileBean getFilePathById(Integer valueOf) throws SQLException;
+
+	FileBean getFileById(Integer valueOf) throws SQLException;
 	
 }

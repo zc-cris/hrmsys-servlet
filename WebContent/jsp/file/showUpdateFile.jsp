@@ -23,8 +23,8 @@
 	        
 	        /** 表单提交的校验 */
 	        $("#btn").click(function(){
-	        	var title = $("#title").val(); 
-	            var file = $("#file").val();
+	        	var title = $("#fileName").val(); 
+	            var file = $("#fileDesc").val();
 	   
 	        	if($.trim(title).length <= 2){
 	        		alert("请输入两个字符以上的标题");
@@ -63,13 +63,13 @@
 					    <tr><td class="font3 fftd">
 					              
 					                
-					                文档标题：<input type="text" name="title" size="30" id="title" value="${document.title }"/></td>
+					                文档标题：<input type="text" name="fileName" size="30" id="title" value="${file.fileName }"/></td>
 					    </tr>
 						<tr><td class="main_tdbor"></td></tr>
 						
 						
 						<tr><td class="font3 fftd">文档描述：<br/>
-							<textarea name="remark" cols="88" rows="11" id="content">${document.remark }</textarea>
+							<textarea name="fileDesc" cols="88" rows="11" id="content">${file.fileDesc }</textarea>
 						</td></tr>
 						<tr><td class="main_tdbor"></td></tr>
 						

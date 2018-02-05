@@ -24,25 +24,9 @@
 	<script type="text/javascript">
 	    $(function(){
 	    	
-	    	var boxs = $("input[type='checkbox'][id^='box_']");
-	    	/** 给全选按钮绑定点击事件  */
-	    	$("#checkAll").click(function(){
-	    		// this是checkAll  this.checked是true
-	    		// 所有数据行的选中状态与全选的状态一致
-	    		boxs.attr("checked",this.checked);
-	    	})
-	    	
-	    	/** 给每个数据行绑定点击事件：判断如果数据行都选中全选也应该选中，反之  */
-	    	boxs.click(function(event){
-	    		/** 去掉复选按钮的事件传播：点击复选会触发行点击：因为复选在行中 */
-	    		event.stopPropagation();
-	    		
-	    		/** 判断当前选中的数据行有多少个  */
-	    		var checkedBoxs = boxs.filter(":checked");
-	    		/** 判断选中的总行数是否等于总行数：以便控制全选按钮的状态   */
-	    		$("#checkAll").attr("checked",checkedBoxs.length == boxs.length);
-	    	})
-	    	
+	    	/** 获取上一次选中的部门数据 */
+			var boxs = $("input[type='checkbox'][id^='box_']");
+
 	    	/** 给数据行绑定鼠标覆盖以及鼠标移开事件  */
 	    	$("tr[id^='data_']").hover(function(){
 	    		$(this).css("backgroundColor","#eeccff");
@@ -57,7 +41,7 @@
 	    		$("#"+checkboxId).trigger("click");
 	    	})
 	    	
-	    	/** 删除员工绑定点击事件 */
+	    	/** 删除文档绑定点击事件 */
 	 	   $("#delete").click(function(){
 	 		   /** 获取到用户选中的复选框  */
 	 		   var checkedBoxs = boxs.filter(":checked");
@@ -72,6 +56,7 @@
 	 			   $.ligerDialog.confirm("确认要删除吗?","删除文档",function(r){
 	 				   if(r){
 	 					   // 发送请求
+	 					   alert(ids.get());
 	 					   window.location = "${pageContext.request.contextPath}/delete.file?fileId=" + ids.get();
 	 				   }
 	 			   });
@@ -161,7 +146,7 @@
 					  </td>
 					  <td>${file.userName }</td>
 					  <td>${file.fileDesc }</td>
-					 <td align="center" width="40px;"><a href="${pageContext.request.contextPath}/update.file?id=${file.fileId}">
+					 <td align="center" width="40px;"><a href="${pageContext.request.contextPath}/get.file?id=${file.fileId}">
 							<img title="修改" src="${pageContext.request.contextPath}/images/update.gif"/></a>
 					  </td>
 					  <td align="center"  width="40px;"><a href="${pageContext.request.contextPath}/download.file?fileId=${file.fileId}" id="down_${file.fileId }">
