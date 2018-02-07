@@ -21,5 +21,7 @@ public interface IJobDao {
 	Job getJobById(Integer id) throws SQLException;
 	
 	long getCountWithName(String name) throws SQLException;
+
+	List<Job> getByDeptId(int id) throws SQLException;
 	
 }

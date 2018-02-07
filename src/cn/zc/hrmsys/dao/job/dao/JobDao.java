@@ -35,7 +35,7 @@ public class JobDao extends BaseDao<Job> implements IJobDao {
 	 */
 	@Override
 	public List<Job> getAllWithCriteria(JobCriteria JobCriteria) throws SQLException {
-		String sql = "select jobId,jobName,jobDesc,jobState from tb_job where jobName like ?"
+		String sql = "select jobId,jobName,jobDesc from tb_job where jobName like ?"
 				+ " and jobState = ?";
 		return queryList(sql, JobCriteria.getJobName(), JobCriteria.getJobState());
 	}
@@ -108,5 +108,11 @@ public class JobDao extends BaseDao<Job> implements IJobDao {
 	public long getCountWithName(String name) throws SQLException {
 		String sql = "select count(jobName) from tb_job where jobName=? and jobState = 1";
 		return queryValue(sql, name);
+	}
+
+	@Override
+	public List<Job> getByDeptId(int id) throws SQLException {
+		String sql = "select jobName,jobId from tb_job where deptId = ?";
+		return queryList(sql, id);
 	}
 }

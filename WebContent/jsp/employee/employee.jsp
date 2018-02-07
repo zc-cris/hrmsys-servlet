@@ -24,17 +24,69 @@
 	<link href="${pageContext.request.contextPath}/css/pager.css" type="text/css" rel="stylesheet" />
 
 	<script type="text/javascript">
+	
+	/* 	$("#province").change(function() {
+    		//清空城市下拉框中除第一项以外的数据(使用jquery的remove方法)
+    		$("#city option:gt(0)").remove();
+			var $option = $("#province option:selected");
+			var province = $option.text();
+			if("选择省份"!=province){
+				$.ajax({
+					type: "POST",
+					url: "${pageContext.request.contextPath}/struts2/ProviceAndCity_findCity?time="+new Date().getTime(),
+					data: {"province":province},
+					success: function(backData,textStatus,ajax) {
+						//alert(backData=null?"ha":"xi");
+						//alert(ajax.responseText);		通过核心对象打印出服务器传来的json文本字符串（具体的值）
+						//解析json文本
+						var array = backData.listCity;		//backData是json对象,array是数组（js对象）
+						for(var i =0;i<array.length;i++){
+							var city = array[i];
+							var $city = $("<option>"+city+"</option>");
+							$("#city").append($city);
+						
+					}
+						/*
+						var $city = $(array);		//把js数组对象变成jquery数组对象，然后进行迭代
+						$city.each(function() {
+							alert(this);		//this表示数组里的每个城市
+						});
+						
+					}
+				});
+			}
+		}); */
 	       $(function(){
 	    	   /** 获取上一次选中的部门数据 */
 	    	   var boxs  = $("input[type='checkbox'][id^='box_']");
 	    	   
-	    	   /** 给全选按钮绑定点击事件  */
-		    	$("#checkAll").click(function(){
-		    		// this是checkAll  this.checked是true
-		    		// 所有数据行的选中状态与全选的状态一致
-		    		boxs.attr("checked",this.checked);
-		    	})
-		    	
+	    	   
+		    	$("#dept_id").change(function() {
+		    		//清空职位下拉框中除第一项以外的数据(使用jquery的remove方法)
+		    		$("#job_id option:gt(0)").remove();
+		    		var $option = $("#dept_id option:selected");
+		    		var deptVal = $option.val();
+		    		if(deptVal != '0'){		//如果不是选择的第一项就触发ajax事件
+		    			$.ajax({
+		    				type: "POST",
+		    				url: "${pageContext.request.contextPath}/getJob.emp",
+		    				data: {"deptVal":deptVal},
+		    				success: function(backData,textStatus,ajax) {
+		    					//alert(backData);
+		    					//alert(ajax.responseText);		//通过核心对象打印出服务器传来的json文本字符串（具体的值）
+		    					//解析json格式的字符串文本
+		    					var array = eval("("+backData+")");
+		    					for(var i =0;i<array.length;i++){
+		    						var jobName = array[i].jobName;
+		    						var jobId = array[i].jobId;
+		    						var $job = $("<option value='"+jobId+"' >"+jobName+"</option>");
+		    						$("#job_id").append($job);
+		    				} 
+		    				}
+		    			});
+		    		}
+				})
+	    	   
 	    	   /** 给数据行绑定鼠标覆盖以及鼠标移开事件  */
 		    	$("tr[id^='data_']").hover(function(){
 		    		$(this).css("backgroundColor","#eeccff");
@@ -85,18 +137,15 @@
 		  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
 		    <tr>
 			  <td class="fftd">
-			  	<form name="empform" method="post" id="empform" action="${pageContext.request.contextPath}/employee/selectEmployee">
+			  	<form name="empform" method="post" id="empform" action="${pageContext.request.contextPath}/queryEmp.emp">
 				    <table width="100%" border="0" cellpadding="0" cellspacing="0">
 					  <tr>
 					    <td class="font3">
 					    	职位：
-							    <select name="job_id" style="width:143px;">
+							    <select name="job_id" style="width:143px;" id="job_id">
 					    			<option value="0">--请选择职位--</option>
-					    			<c:forEach items="${requestScope.jobs }" var="job">
-					    				<option value="${job.jobId }">${job.jobName }</option>
-					    			</c:forEach>
 					    		</select>
-					    	姓名：<input type="text" name="empName">
+					    	姓名：<input type="text" name="name">
 					    	身份证号码：<input type="text" name="empIdCard" maxlength="18">
 					    </td>
 					  </tr>
@@ -104,14 +153,14 @@
 					    <td class="font3">
 					    	性别：
 					    		<select name="sex" style="width:143px;">
-					    			<option value="0">--请选择性别--</option>
+					    			<option value="1">--请选择性别--</option>
 					    			<option value="1">男</option>
 					    			<option value="2">女</option>
 					    		</select>
-					    	所属部门：<select  name="dept_id" style="width:100px;">
+					    	所属部门：<select  name="dept_id" style="width:100px;" id="dept_id">
 								   <option value="0">--部门选择--</option>
 								   <c:forEach items="${requestScope.depts }" var="dept">
-					    				<option value="${dept.id }">${dept.name }</option>
+					    				<option value="${dept.deptId }">${dept.deptName }</option>
 					    			</c:forEach>
 							</select>&nbsp;
 					    	<input type="submit" value="搜索"/>
@@ -144,28 +193,28 @@
 			  <td>建档日期</td>
 			  <td align="center">操作</td>
 			</tr>
-			<c:forEach items="${requestScope.employees}" var="employee" varStatus="stat">
+			<c:forEach items="${requestScope.emps}" var="emp" varStatus="stat">
 				<tr id="data_${stat.index}" class="main_trbg" align="center">
-					<td><input type="checkbox" id="box_${stat.index}" value="${employee.id}"></td>
-					 <td>${employee.name }</td>
+					<td><input type="checkbox" id="box_${stat.index}" value="${emp.empId}"></td>
+					 <td>${emp.empName }</td>
 					  <td>
 					        <c:choose>
-					        	<c:when test="${employee.sex == 1 }">男</c:when>
+					        	<c:when test="${emp.empGender == true }">男</c:when>
 					        	<c:otherwise>女</c:otherwise>
 					        </c:choose>
 					  </td>
-					  <td>${employee.phone }</td>
-					  <td>${employee.email }</td>
-					  <td>${employee.job.name }</td>
-					  <td>${employee.education }</td>
-					  <td>${employee.cardId }</td>
-					  <td>${employee.dept.name }</td>
-					  <td>${employee.address }</td>
+					  <td>${emp.empTel }</td>
+					  <td>${emp.empEmail }</td>
+					  <td>${emp.jobId }</td>
+					  <td>${emp.empEdu }</td>
+					  <td>${emp.empIdCard }</td>
+					  <td>${emp.deptId }</td>
+					  <td>${emp.empAddress }</td>
 					  <td>
-					  	<f:formatDate value="${employee.createDate}" 
+					  	<f:formatDate value="${emp.empRegDate}" 
 								type="date" dateStyle="long"/>
 					  </td>
-					  <td align="center" width="40px;"><a href="${pageContext.request.contextPath}/employee/updateEmployee?flag=1&id=${employee.id}">
+					  <td align="center" width="40px;"><a href="${pageContext.request.contextPath}/get.emp?empId=${emp.empId}">
 							<img title="修改" src="${pageContext.request.contextPath}/images/update.gif"/></a>
 					  </td>
 				</tr>

@@ -24,5 +24,6 @@ public interface IUserService {
 
 	User getUserById(Integer integer) throws SQLException;
 
+	int getCountByName(String name) throws SQLException;
 	
 }

@@ -23,9 +23,8 @@
 	        
 	        /** 表单提交的校验 */
 	        $("#btn").click(function(){
-	        	var title = $("#fileName").val(); 
-	            var file = $("#fileDesc").val();
-	   
+	        	var title = $("#title").val(); 
+	            var file = $("#content").val();
 	        	if($.trim(title).length <= 2){
 	        		alert("请输入两个字符以上的标题");
 	        		return ;
@@ -40,6 +39,13 @@
 		</script>
 	</head>
 	<body>
+	<!-- 如果没有查询到用户，就进行弹出提示 -->
+	<c:if test="${requestScope.flag eq '1'}">
+	
+		<script type="text/javascript">
+			alert("${requestScope.message }");
+		</script>
+	</c:if>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0">
 			 <tr><td height="10"></td></tr>
 			 <tr>
@@ -54,39 +60,31 @@
 		  	<tr valign="top">
 			    <td>
 			    
-				 <form id="documentForm" name="documentForm" action="${pageContext.request.contextPath}/document/updateDocument" enctype="multipart/form-data" method="post">
+				 <form id="documentForm" name="documentForm" action="${pageContext.request.contextPath}/update.file" method="post">
                         <!-- 隐藏表单，flag表示添加标记 -->
-    	 			<input type="hidden" name="flag" value="2">
-    	 			<input type="hidden" name="id" value="${document.id }">
+    	 			<input type="hidden" name="id" id="id" value="${file.fileId }">
 				  <table width="100%" border="0" cellpadding="0" cellspacing="10" class="main_tab">
                         
 					    <tr><td class="font3 fftd">
 					              
 					                
-					                文档标题：<input type="text" name="fileName" size="30" id="title" value="${file.fileName }"/></td>
+					                文档标题：<input type="text" name="name" size="30" id="title" value="${file.fileName }"/></td>
 					    </tr>
 						<tr><td class="main_tdbor"></td></tr>
 						
 						
 						<tr><td class="font3 fftd">文档描述：<br/>
-							<textarea name="fileDesc" cols="88" rows="11" id="content">${file.fileDesc }</textarea>
+							<textarea name="desc" cols="88" rows="11" id="content">${file.fileDesc }</textarea>
 						</td></tr>
 						<tr><td class="main_tdbor"></td></tr>
 						
-							<tr><td class="font3 fftd">文档：<br/>
-							<input type="file" name="file" id="file"  size="30"/>
-						</td></tr>
 						<tr><td class="main_tdbor"></td></tr>
-						
-                      
 						
 						<tr><td class="font3 fftd">
 								<input type="button" id="btn" value="确定">
 								<input type="reset" value="重置">
 						</td></tr>
 						<tr><td class="main_tdbor"></td></tr>
-					
-
 				  </table>
 				  </form>
 				</td>

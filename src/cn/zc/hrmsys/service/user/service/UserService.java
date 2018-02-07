@@ -164,6 +164,12 @@ public class UserService implements IUserService {
 	public User getUserById(Integer userId) throws SQLException {
 		return userDao.getById(userId);
 	}
+
+
+	@Override
+	public int getCountByName(String name) throws SQLException {
+		return (int) userDao.getCountWithName(name);
+	}
 }
 
 

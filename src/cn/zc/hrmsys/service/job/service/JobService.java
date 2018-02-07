@@ -6,6 +6,7 @@ import java.util.List;
 import cn.zc.hrmsys.MyException.JobException;
 import cn.zc.hrmsys.dao.job.dao.IJobDao;
 import cn.zc.hrmsys.factory.dao.factory.DaoFactory;
+import cn.zc.hrmsys.pojo.criteria.JobCriteria;
 import cn.zc.hrmsys.pojo.entity.Job;
 
 public class JobService implements IJobService {
@@ -70,6 +71,29 @@ public class JobService implements IJobService {
 			throw new JobException("存在同样名字的职位，请重新更改职位名字");
 		}
 		JobDao.updateJob(job);
+	}
+
+	/**
+	 * 
+	 * @MethodName: getAll
+	 * @Description: TODO (根据部门名模糊查询相关有效部门)
+	 * @see cn.zc.hrmsys.service.job.service.IJobService#getAll(java.lang.String)
+	 * @Author：zc-cris
+	 * @Create Date：2018年2月6日上午10:14:59
+	 */
+	@Override
+	public List<Job> getAll(String jobName) throws SQLException {
+		return JobDao.getAllWithCriteria(new JobCriteria(jobName, null));
+	}
+
+	@Override
+	public Job getById(int parseInt) throws SQLException {
+		return JobDao.getJobById(parseInt);
+	}
+
+	@Override
+	public List<Job> getByDeptId(int id) throws SQLException {
+		return JobDao.getByDeptId(id);
 	}
 
 }

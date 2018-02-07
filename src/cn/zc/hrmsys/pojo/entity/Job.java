@@ -18,6 +18,7 @@ public class Job {
 	private String jobName;
 	private String jobDesc;
 	private Boolean jobState;
+	private Integer deptId;
 	
 	public Job() {
 		super();
@@ -26,6 +27,15 @@ public class Job {
 		super();
 		this.jobName = jobName;
 		this.jobDesc = jobDesc;
+	}
+	
+	public Job(Integer jobId, String jobName, String jobDesc, Boolean jobState, Integer deptId) {
+		super();
+		this.jobId = jobId;
+		this.jobName = jobName;
+		this.jobDesc = jobDesc;
+		this.jobState = jobState;
+		this.deptId = deptId;
 	}
 	public Integer getJobId() {
 		return jobId;
@@ -53,7 +63,8 @@ public class Job {
 	}
 	@Override
 	public String toString() {
-		return "Job [jobId=" + jobId + ", jobName=" + jobName + ", jobDesc=" + jobDesc + ", jobState=" + (jobState==true?"有效职位":"无效职位") + "]";
+		return "Job [jobId=" + jobId + ", jobName=" + jobName + ", jobDesc=" + jobDesc + ", jobState=" + jobState
+				+ ", deptId=" + deptId + "]";
 	}
 	
 }

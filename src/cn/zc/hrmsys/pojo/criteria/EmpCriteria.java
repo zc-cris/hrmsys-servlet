@@ -11,7 +11,12 @@ public class EmpCriteria {
 		super();
 		
 	}
-	
+	public EmpCriteria(String name, Integer deptId, Integer jobId, Boolean sex) {
+		this.empName = name;
+		this.deptId = deptId;
+		this.jobId = jobId;
+		this.empGender = sex;
+	}
 	public EmpCriteria(Integer jobId, Boolean empGender, String empName, Integer empIdCard, Integer deptId) {
 		super();
 		this.jobId = jobId;

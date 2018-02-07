@@ -58,6 +58,16 @@
 			}
 			$("#userForm").submit();
 		});
+		
+		$("#username").change(function(){
+			var val = $(this).val();
+			val = $.trim(val);
+			if(val != ''){
+				var url = "${pageContext.request.contextPath}/nameInvalidate.user";
+				var data = {"name":val,"date":new Date()};
+				$("#nameDiv").load(url,data);
+			}
+		})
 	});
 </script>
 </head>
@@ -66,7 +76,7 @@
 	<c:if test="${requestScope.flag eq '1'}">
 		<!-- 服务器会解析message的值，需要作为字符串才可以被浏览器打印出来 -->
 		<script type="text/javascript">
-			alert("${requestScope.message}");
+			alert("${requestScop.e.message}");
 		</script>
 	</c:if>
 	<table width="100%" border="0" cellpadding="0" cellspacing="0">
@@ -102,6 +112,9 @@
 										<td class="font3 fftd">姓&nbsp;名：<input type="text"
 											name="userName" id="username" size="20"
 											value="${param.userName }" /></td>
+											
+										<td><div id="nameDiv"></div> </td>
+										
 									</tr>
 									<tr>
 										<td class="font3 fftd">密&nbsp;码：<input name="userPwd"

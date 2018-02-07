@@ -146,7 +146,7 @@
 					  </td>
 					  <td>${file.userName }</td>
 					  <td>${file.fileDesc }</td>
-					 <td align="center" width="40px;"><a href="${pageContext.request.contextPath}/get.file?id=${file.fileId}">
+					 <td align="center" width="40px;"><a href="${pageContext.request.contextPath}/get.file?fileId=${file.fileId}">
 							<img title="修改" src="${pageContext.request.contextPath}/images/update.gif"/></a>
 					  </td>
 					  <td align="center"  width="40px;"><a href="${pageContext.request.contextPath}/download.file?fileId=${file.fileId}" id="down_${file.fileId }">

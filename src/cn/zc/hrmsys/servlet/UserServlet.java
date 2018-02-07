@@ -50,6 +50,32 @@ public class UserServlet extends HttpServlet {
 	}
 
 	/**
+	 * @throws IOException 
+	 * @throws SQLException 
+	 * 
+	 * @MethodName: nameInvalidate
+	 * @Description: TODO (通过jquery来验证用户名)
+	 * @Return Type: void
+	 * @Author: zc-cris
+	 * @Create Date：2018年2月6日下午7:50:32
+	 * @since
+	 * @throws
+	 */
+	@SuppressWarnings("unused")
+	private void nameInvalidate(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+		String name = request.getParameter("name");
+		int count = userService.getCountByName(name);
+		String str = null;
+		if(count > 0) {
+			str = "<font color='red'>用户名已经存在了！</font>";
+		}else {
+			str = "<font color='green'>用户名可以使用</font>";
+		}
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		response.getWriter().write(str);
+	}
+	/**
 	 * 
 	 * @MethodName: login
 	 * @Description: TODO (登录)

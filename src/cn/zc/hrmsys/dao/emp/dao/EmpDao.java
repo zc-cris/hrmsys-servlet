@@ -33,7 +33,7 @@ public class EmpDao extends BaseDao<Emp> implements IEmpDao {
 	 */
 	@Override
 	public List<Emp> getWithUserCriteria(EmpCriteria empCriteria) throws SQLException {
-		StringBuffer sql = new StringBuffer("select empId,empName,empGender,empTel,empEmail,empEdu,deptId,empAddress,empRegDate from tb_emp where empName like ? and empGender = ?");
+		StringBuffer sql = new StringBuffer("select empId,empName,empGender,empIdCard,empTel,empEmail,empEdu,deptId,jobId,empAddress,empRegDate from tb_emp where empName like ? and empGender = ?");
 		if(empCriteria.getDeptId() != null && empCriteria.getJobId() != null) {
 			//主要根据部门id和职位id模糊查询员工记录
 			return getWithJIdAndDId(empCriteria, sql);

@@ -27,6 +27,8 @@ public class Emp {
 	private String empAddress;
 	private Integer jobId;
 	private Integer deptId;
+	private Dept dept;
+	private Job job;
 	
 	public Emp() {
 		super();
@@ -56,6 +58,23 @@ public class Emp {
 		this.jobId = jobId;
 		this.deptId = deptId;
 	}
+
+	public Dept getDept() {
+		return dept;
+	}
+
+	public void setDept(Dept dept) {
+		this.dept = dept;
+	}
+
+	public Job getJob() {
+		return job;
+	}
+
+	public void setJob(Job job) {
+		this.job = job;
+	}
+
 	public Integer getEmpId() {
 		return empId;
 	}
@@ -122,10 +141,12 @@ public class Emp {
 	public void setDeptId(Integer deptId) {
 		this.deptId = deptId;
 	}
+
 	@Override
 	public String toString() {
 		return "Emp [empId=" + empId + ", empName=" + empName + ", empGender=" + empGender + ", empTel=" + empTel
 				+ ", empEmail=" + empEmail + ", empEdu=" + empEdu + ", empIdCard=" + empIdCard + ", empRegDate="
 				+ empRegDate + ", empAddress=" + empAddress + ", jobId=" + jobId + ", deptId=" + deptId + "]";
 	}
+	
 }
