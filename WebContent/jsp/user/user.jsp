@@ -84,7 +84,7 @@
 		$("#queryAll")
 				.click(
 						function() {
-							window.location = "${pageContext.request.contextPath}/queryAll.user";
+							window.location = "${pageContext.request.contextPath}/queryAll.user?pageNum=1";
 						})
 
 		//全选，全不选
@@ -161,10 +161,11 @@
 		<!-- 数据展示区 -->
 		<tr valign="top">
 			<td height="20">
-				<form action="${pageContext.request.contextPath}/delete.user"
+				<form  action="${pageContext.request.contextPath}/delete.user"
 					id="form1" method="post">
+					<c:if test="${requestScope.pageBean !=null }">
 					<table width="100%" border="1" cellpadding="5" cellspacing="0"
-						style="border: #c2c6cc 1px solid; border-collapse: collapse;">
+						style="position:relative;top:-180px;border: #c2c6cc 1px solid; border-collapse: collapse;">
 						<input type="hidden" name="checkedIdArray" value=""
 							id="checkedIdArray">
 						<tr class="main_trbg_tit" align="center">
@@ -176,7 +177,7 @@
 							<td>创建时间</td>
 							<td align="center">操作</td>
 						</tr>
-						<c:forEach items="${requestScope.users}" var="user"
+						<c:forEach items="${requestScope.pageBean.lists}" var="user"
 							varStatus="stat">
 							<tr id="data_${stat.index}" align="center" class="main_trbg"
 								onMouseOver="move(this);" onMouseOut="out(this);">
@@ -197,17 +198,23 @@
 								</a></td>
 							</tr>
 						</c:forEach>
+						<!-- 以下为原生分页功能代码，感觉自己猛猛哒 ^-^ -->
+						<tr>
+						<td colspan="6" align="center" text="center">
+						<c:if test="${requestScope.pageBean.currentPageNum != 1}">
+						<a href="${pageContext.request.contextPath}/queryAll.user?pageNum=${requestScope.pageBean.currentPageNum -1}">上一页</a>&nbsp;&nbsp;
+						</c:if>
+						<c:if test="${requestScope.pageBean.currentPageNum < requestScope.pageBean.allPageNum}">
+						<a href="${pageContext.request.contextPath}/queryAll.user?pageNum=${requestScope.pageBean.currentPageNum +1}">下一页</a>&nbsp;&nbsp;
+						</c:if>
+						总共 &nbsp; <font color="red">${requestScope.pageBean.allCount }</font> &nbsp; 条记录&nbsp;&nbsp;
+						当前第&nbsp;${requestScope.pageBean.currentPageNum }&nbsp;页&nbsp;&nbsp;
+						总共&nbsp; ${requestScope.pageBean.allPageNum }&nbsp; 页
+						</td>
+						</tr>
 					</table>
 				</form>
-			</td>
-		</tr>
-		<!-- 分页标签 -->
-		<tr valign="top">
-			<td align="center" class="font3"><fkjava:pager
-					pageIndex="${requestScope.pageModel.pageIndex}"
-					pageSize="${requestScope.pageModel.pageSize}"
-					recordCount="${requestScope.pageModel.recordCount}" style="digg"
-					submitUrl="${pageContext.request.contextPath}/employee/selectEmployee?pageIndex={0}" />
+				</c:if>
 			</td>
 		</tr>
 	</table>

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.zc.hrmsys.MyException.UserException;
 import cn.zc.hrmsys.factory.service.factory.ServiceFactory;
+import cn.zc.hrmsys.pojo.PageBean;
 import cn.zc.hrmsys.pojo.criteria.UserCriteria;
 import cn.zc.hrmsys.pojo.entity.User;
 import cn.zc.hrmsys.service.user.service.IUserService;
@@ -179,7 +180,7 @@ public class UserServlet extends HttpServlet {
 	/**
 	 * 
 	 * @MethodName: queryAll
-	 * @Description: TODO (查询所有有效用户)
+	 * @Description: TODO (分页查询所有有效用户)
 	 * @param request
 	 * @param response
 	 * @Return Type: void
@@ -191,9 +192,16 @@ public class UserServlet extends HttpServlet {
 	@SuppressWarnings("unused")
 	private void queryAll(HttpServletRequest request, HttpServletResponse response) {
 		List<User> users;
+		String pageNum = request.getParameter("pageNum");
+		PageBean<User> pageBean = new PageBean<>();
+		int start = (Integer.parseInt(pageNum)-1)*pageBean.getPageSize();
 		try {
-			users = userService.getAll();
-			request.setAttribute("users", users);
+			users = userService.getAll(start);
+			long count = userService.getAllCount();
+			pageBean.setAllCount(count);
+			pageBean.setLists(users);
+			pageBean.setCurrentPageNum(Integer.parseInt(pageNum));
+			request.setAttribute("pageBean", pageBean);
 			getJsp("/jsp/user/user.jsp", request, response);
 		} catch (SQLException | ServletException | IOException e) {
 			e.printStackTrace();

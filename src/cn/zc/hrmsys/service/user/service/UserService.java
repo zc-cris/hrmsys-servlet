@@ -148,8 +148,8 @@ public class UserService implements IUserService {
 	 * @Create Date：2018年2月2日下午2:40:56
 	 */
 	@Override
-	public List<User> getAll() throws SQLException {
-		return userDao.getAll();
+	public List<User> getAll(int start) throws SQLException {
+		return userDao.getAll(start);
 	}
 
 	/**
@@ -169,6 +169,12 @@ public class UserService implements IUserService {
 	@Override
 	public int getCountByName(String name) throws SQLException {
 		return (int) userDao.getCountWithName(name);
+	}
+
+
+	@Override
+	public long getAllCount() throws SQLException {
+		return userDao.getAllCount();
 	}
 }
 

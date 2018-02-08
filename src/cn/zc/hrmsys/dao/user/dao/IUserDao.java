@@ -21,7 +21,7 @@ import cn.zc.hrmsys.pojo.entity.User;
  */
 public interface IUserDao {
 	
-	List<User> getAll() throws SQLException;
+	List<User> getAll(int start) throws SQLException;
 	
 	List<User> getWithUserCriteria(UserCriteria userCriteria) throws SQLException;
 	
@@ -38,4 +38,6 @@ public interface IUserDao {
 	User getUser(User user) throws SQLException;
 
 	void deleteUsersByIds(String[] values) throws SQLException;
+
+	long getAllCount() throws SQLException;
 }

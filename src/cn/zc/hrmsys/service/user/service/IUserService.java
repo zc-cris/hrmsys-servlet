@@ -20,10 +20,12 @@ public interface IUserService {
 
 	void deleteByIds(String[] values) throws NumberFormatException, SQLException;
 
-	List<User> getAll() throws SQLException;
+	List<User> getAll(int start) throws SQLException;
 
 	User getUserById(Integer integer) throws SQLException;
 
 	int getCountByName(String name) throws SQLException;
+
+	long getAllCount() throws SQLException;
 	
 }

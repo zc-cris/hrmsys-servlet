@@ -20,9 +20,9 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 	 * @Create Date：2018年1月31日上午10:42:49
 	 */
 	@Override
-	public List<User> getAll() throws SQLException {
-		String sql = "select userId,userName,userPwd,userState,regDate from tb_user where userState=1 order by regDate desc";
-		return queryList(sql);
+	public List<User> getAll(int start) throws SQLException {
+		String sql = "select userId,userName,userPwd,userState,regDate from tb_user where userState=1 order by regDate desc limit ?,2 ";
+		return queryList(sql,start);
 	}
 
 	/**
@@ -142,5 +142,12 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 			params[i] = new Object[]{values[i]};		//给低维也就是列数“？”赋值，有几个？低维就有几个元素，决定每条SQL语句的参数个数
 		}
 		JdbcUtils.getQueryRunner().batch(sql, params);
+	}
+
+	@Override
+	public long getAllCount() throws SQLException {
+		String sql = "select count(userName) from tb_user where userState = 1";
+		return queryValue(sql);
+		
 	}
 }
